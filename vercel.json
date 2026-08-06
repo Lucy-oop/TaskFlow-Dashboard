@@ -1,39 +1,8 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "app/templates/**/*.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "app/statics/**",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/login",
-      "dest": "/app/templates/login.html"
-    },
-    {
-      "src": "/register",
-      "dest": "/app/templates/register.html"
-    },
-    {
-      "src": "/dashboard",
-      "dest": "/app/templates/dashboard.html"
-    },
-    {
-      "src": "/",
-      "dest": "/app/templates/dashboard.html"
-    },
-    {
-      "src": "/static/(.*)",
-      "dest": "/app/statics/$1"
-    },
-    {
-      "src": "/statics/(.*)",
-      "dest": "/app/statics/$1"
-    }
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/static/(.*)", "destination": "/app/statics/$1" },
+    { "source": "/statics/(.*)", "destination": "/app/statics/$1" }
   ]
 }
