@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+    <link rel="stylesheet" href="../statics/css/style.css">
+</head>
+<body class="dark min-h-screen flex justify-center items-center p-6">
+    <div class="relative rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-2xl shadow-[0_30px_80px_-20px_rgba(2,6,23,0.85)] ring-1 ring-inset ring-white/5 p-9 sm:p-10 w-full max-w-md">
+        <h1 class="text-3xl font-extrabold tracking-tight mb-9 bg-gradient-to-br from-white via-indigo-100 to-indigo-300 bg-clip-text text-transparent">Register</h1>
+        <form id="registerform" class="space-y-4">
+            <input id="username" type="text" placeholder="Username" class="w-full rounded-xl border border-white/10 bg-white/[0.03] text-slate-100 placeholder:text-slate-500 px-4 py-3.5 outline-none transition duration-200 hover:border-white/20 focus:border-indigo-400/60 focus:bg-white/[0.06] focus:ring-4 focus:ring-indigo-500/15">
+            <input id="email" type="email" placeholder="Email" class="w-full rounded-xl border border-white/10 bg-white/[0.03] text-slate-100 placeholder:text-slate-500 px-4 py-3.5 outline-none transition duration-200 hover:border-white/20 focus:border-indigo-400/60 focus:bg-white/[0.06] focus:ring-4 focus:ring-indigo-500/15">
+            <input id="password" type="password" placeholder="Password" class="w-full rounded-xl border border-white/10 bg-white/[0.03] text-slate-100 placeholder:text-slate-500 px-4 py-3.5 outline-none transition duration-200 hover:border-white/20 focus:border-indigo-400/60 focus:bg-white/[0.06] focus:ring-4 focus:ring-indigo-500/15">
+            <button class="w-full rounded-xl bg-gradient-to-r from-indigo-500 to-violet-500 px-4 py-3.5 font-semibold text-white shadow-lg shadow-indigo-900/40 outline-none transition duration-200 hover:from-indigo-400 hover:to-violet-400 hover:shadow-xl hover:shadow-indigo-800/50 focus-visible:ring-4 focus-visible:ring-indigo-400/40 active:scale-[0.985]">Register</button>
+
+        </form>
+    </div>
+
+<script src="../statics/js/api.js"></script>
+<script src="../statics/js/auth.js"></script>
+
+</body>
+</html>

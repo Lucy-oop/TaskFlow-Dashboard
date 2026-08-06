@@ -1,0 +1,337 @@
+/* ==========================================================================
+   TaskFlow — Visual Design System
+   Purely presentational. No selectors here depend on behaviour, and no
+   behaviour depends on anything here. Dark is the default surface; the
+   dashboard's existing toggle removes `.dark` from <body> to reveal light.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Design tokens
+   -------------------------------------------------------------------------- */
+
+:root {
+    color-scheme: light;
+
+    --tf-bg: #eef1f8;
+    --tf-text: #0f172a;
+    --tf-muted: #64748b;
+
+    /* Ambient light sources painted behind the page content */
+    --tf-glow-a: rgba(99, 102, 241, 0.22);
+    --tf-glow-b: rgba(168, 85, 247, 0.16);
+    --tf-glow-c: rgba(14, 165, 233, 0.16);
+
+    --tf-grid: rgba(15, 23, 42, 0.045);
+    --tf-ring: rgba(79, 70, 229, 0.55);
+    --tf-scrollbar: rgba(15, 23, 42, 0.18);
+    --tf-scrollbar-hover: rgba(15, 23, 42, 0.32);
+    --tf-selection: rgba(99, 102, 241, 0.22);
+
+    /* Chevron for custom-rendered selects */
+    --tf-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+}
+
+body.dark {
+    color-scheme: dark;
+
+    --tf-bg: #05070f;
+    --tf-text: #e6ebf5;
+    --tf-muted: #94a3b8;
+
+    --tf-glow-a: rgba(79, 70, 229, 0.34);
+    --tf-glow-b: rgba(147, 51, 234, 0.24);
+    --tf-glow-c: rgba(6, 182, 212, 0.16);
+
+    --tf-grid: rgba(255, 255, 255, 0.035);
+    --tf-ring: rgba(129, 140, 248, 0.7);
+    --tf-scrollbar: rgba(148, 163, 184, 0.22);
+    --tf-scrollbar-hover: rgba(148, 163, 184, 0.4);
+    --tf-selection: rgba(129, 140, 248, 0.3);
+
+    --tf-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+}
+
+/* --------------------------------------------------------------------------
+   2. Page canvas
+   -------------------------------------------------------------------------- */
+
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    position: relative;
+    min-height: 100vh;
+    background-color: var(--tf-bg);
+    color: var(--tf-text);
+    font-family: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+        Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    line-height: 1.6;
+    letter-spacing: -0.011em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.6s ease, color 0.35s ease;
+}
+
+/* Ambient gradient wash. Negative z-index keeps it above the body background
+   but beneath every in-flow child, so no extra DOM node is needed. */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+        radial-gradient(58rem 46rem at 8% -12%, var(--tf-glow-a), transparent 62%),
+        radial-gradient(52rem 42rem at 96% 4%, var(--tf-glow-b), transparent 62%),
+        radial-gradient(46rem 40rem at 44% 118%, var(--tf-glow-c), transparent 62%);
+    animation: tf-drift 26s ease-in-out infinite alternate;
+    transition: background-image 0.6s ease;
+}
+
+/* Faint structural grid, faded out toward the edges. */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+        linear-gradient(to right, var(--tf-grid) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--tf-grid) 1px, transparent 1px);
+    background-size: 56px 56px;
+    -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 30%, #000 20%, transparent 78%);
+    mask-image: radial-gradient(ellipse 90% 70% at 50% 30%, #000 20%, transparent 78%);
+}
+
+@keyframes tf-drift {
+    from {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+    to {
+        transform: translate3d(0, -1.75rem, 0) scale(1.06);
+    }
+}
+
+/* --------------------------------------------------------------------------
+   3. Typography rhythm
+   -------------------------------------------------------------------------- */
+
+h1,
+h2,
+h3 {
+    letter-spacing: -0.028em;
+    line-height: 1.18;
+    text-wrap: balance;
+}
+
+p {
+    text-wrap: pretty;
+}
+
+::selection {
+    background: var(--tf-selection);
+}
+
+/* --------------------------------------------------------------------------
+   4. Form controls
+   -------------------------------------------------------------------------- */
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--tf-muted);
+    opacity: 0.75;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 5.5rem;
+}
+
+/* Native select chrome is unstyleable and reads as a light-mode artefact, so
+   the arrow is redrawn from a token-driven data URI. */
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: var(--tf-chevron);
+    background-repeat: no-repeat;
+    background-position: right 0.85rem center;
+    background-size: 1.05rem;
+    cursor: pointer;
+}
+
+/* The date picker indicator inherits color-scheme, this just lifts contrast. */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0.6;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+input[type="date"]:hover::-webkit-calendar-picker-indicator {
+    opacity: 1;
+}
+
+/* Keyboard-only focus ring for anything without an explicit Tailwind ring. */
+:focus-visible {
+    outline: 2px solid var(--tf-ring);
+    outline-offset: 2px;
+    border-radius: 0.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   5. Task card accents
+   `.tf-card` is decorative only — the interactive hooks (.editBtn/.deleteBtn)
+   live on the buttons inside and are untouched.
+   -------------------------------------------------------------------------- */
+
+.tf-card {
+    animation: tf-rise 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Hairline of light along the top edge, brightening on hover. */
+.tf-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 1.25rem;
+    right: 1.25rem;
+    height: 1px;
+    background: linear-gradient(
+        to right,
+        transparent,
+        rgba(129, 140, 248, 0.55),
+        rgba(217, 70, 239, 0.4),
+        transparent
+    );
+    opacity: 0.5;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+}
+
+.tf-card:hover::before {
+    opacity: 1;
+}
+
+/* Soft radial bloom that fades in behind the card contents on hover. */
+.tf-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        24rem 14rem at 50% -20%,
+        rgba(99, 102, 241, 0.16),
+        transparent 70%
+    );
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+}
+
+.tf-card:hover::after {
+    opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   6. Overlay + toast motion
+   These hook onto the classes the existing scripts already toggle
+   (`hidden` / `flex`) rather than introducing new state.
+   -------------------------------------------------------------------------- */
+
+#taskModal.flex {
+    animation: tf-fade 0.22s ease-out both;
+}
+
+#taskModal.flex > div {
+    animation: tf-pop 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+#toast:not(.hidden) {
+    animation: tf-toast 0.38s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes tf-fade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes tf-pop {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 1rem, 0) scale(0.965);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+}
+
+@keyframes tf-rise {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 0.75rem, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes tf-toast {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 1.25rem, 0) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+}
+
+/* --------------------------------------------------------------------------
+   7. Scrollbar
+   -------------------------------------------------------------------------- */
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--tf-scrollbar) transparent;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--tf-scrollbar);
+    border: 3px solid transparent;
+    border-radius: 9999px;
+    background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--tf-scrollbar-hover);
+}
+
+/* --------------------------------------------------------------------------
+   8. Reduced motion
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+    }
+}
