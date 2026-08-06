@@ -14,7 +14,11 @@ app = FastAPI(
 )
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allows Live Server (http://127.0.0.1:5500) to communicate with API
+    allow_origins=[
+        "https://taskflow-dashboard1-ten.vercel.app",
+        "http://127.0.0.1:8000",
+        "http://localhost:5500"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
