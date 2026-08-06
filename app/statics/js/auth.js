@@ -12,7 +12,7 @@ loginForm?.addEventListener("submit", async (e) => {
 
         if (data && data.access_token) {
             localStorage.setItem("token", data.access_token);
-            window.location.href = "../templates/dashboad.html";
+            window.location.href = "/dashboard";
         } else {
             alert(data?.detail || "Invalid login credentials");
         }
@@ -35,7 +35,7 @@ registerForm?.addEventListener("submit", async (e) => {
         // /users/register returns the created user, not a token, so hand off to login.
         if (data && data.id) {
             alert("Account created. Please log in.");
-            window.location.href = "./login.html";
+            window.location.href = "/login";
         } else {
             alert(data?.detail || "Registration failed. Please check your details.");
         }
