@@ -12,12 +12,16 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI(
     title="Task Manager API"
 )
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "https://taskflow-dashboard1-ten.vercel.app",
+        "https://taskflow-dashboard1-git-main-lucy-oops-projects.vercel.app",
         "http://127.0.0.1:8000",
-        "http://localhost:5500"
+        "http://localhost:5500",
+        "http://127.0.0.1:5500",
+        "*"  # Allows all origins during development
     ],
     allow_credentials=True,
     allow_methods=["*"],

@@ -13,7 +13,6 @@ async function apiRequest(
     if (auth) {
         const token = localStorage.getItem("token");
         
-        
         if (!token) {
             console.error("No auth token found in localStorage.");
             window.location.href = "/login";
@@ -35,7 +34,7 @@ async function apiRequest(
     try {
         const response = await fetch(`${API_URL}${endpoint}`, options);
 
-        //  401 Expired or Invalid Token)
+        // 401 Expired or Invalid Token
         if (response.status === 401) {
             console.error("Session expired or invalid token. Redirecting to login...");
             localStorage.removeItem("token");
