@@ -1,0 +1,31 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "app/templates/*.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "app/statics/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/statics/(.*)",
+      "dest": "/app/statics/$1"
+    },
+    {
+      "src": "/login",
+      "dest": "/app/templates/login.html"
+    },
+    {
+      "src": "/register",
+      "dest": "/app/templates/register.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/app/templates/dashboad.html"
+    }
+  ]
+}
