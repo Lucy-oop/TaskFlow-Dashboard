@@ -2,7 +2,7 @@
   "version": 2,
   "rewrites": [
     { "source": "/login", "destination": "/app/templates/login.html" },
-    { "source": "/register", "destination": "/register.html" },
+    { "source": "/register", "destination": "/app/templates/register.html" },
     { "source": "/", "destination": "/app/templates/dashboard.html" },
     { "source": "/static/(.*)", "destination": "/app/statics/$1" },
     { "source": "/statics/(.*)", "destination": "/app/statics/$1" }
